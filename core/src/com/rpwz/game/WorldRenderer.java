@@ -22,8 +22,9 @@ public class WorldRenderer {
 		this.mazeRenderer = new MazeRenderer(pacmanGame.batch,world.getMaze());
 	}
 	public void render(float delta) {
-		batch.begin();
 		mazeRenderer.render();
+		
+		batch.begin();
 		Vector2 pos = world.getPacman().getPosition();
 		batch.draw(pacmanImg,pos.x,pos.y);
 		batch.end();

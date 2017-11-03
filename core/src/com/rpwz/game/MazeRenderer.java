@@ -18,7 +18,20 @@ public class MazeRenderer {
 	}
 	
 	public void render() {
-		
+		batch.begin();
+        for(int r = 0; r < maze.getHeight(); r++) {
+            for(int c = 0; c < maze.getWidth(); c++) {
+                int x = c * 40;
+                int y = 600 - (r * 40) - 40;
+ 
+                if(maze.hasWallAt(r, c)) {
+                    batch.draw(wallImage, x, y);
+                } else if(maze.hasDotAt(r, c)) {
+                    batch.draw(dotImage, x, y);
+                }
+            }
+        }
+        batch.end();
 	}
 
 }
