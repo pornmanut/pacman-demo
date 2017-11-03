@@ -5,7 +5,7 @@ public class World {
 	private Maze maze;
 	
 	public World(PacmanGame pacmanGame){
-		this.pacman = new Pacman(100,100);
+		this.pacman = new Pacman(60,60);
 		this.maze = new Maze();
 	}
 	
