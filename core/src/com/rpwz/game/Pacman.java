@@ -26,12 +26,14 @@ public class Pacman {
 	
 	private Vector2 position;
 	private Maze maze;
+	private World world;
 	
-	public Pacman(int x,int y,Maze maze) {
+	public Pacman(int x,int y,World world) {
 		this.position = new Vector2(x,y);
 		this.currentDir = DIR_STILL;
 		this.nextDir = DIR_STILL;
-		this.maze = maze;
+		this.world = world;
+		this.maze = this.world.getMaze();
 	}
 	
 	private int getRow() {
@@ -47,7 +49,12 @@ public class Pacman {
 	}
 	
 	private void eatDot() {
-		maze.removeDotAt(getRow(), getColum());
+		int row = getRow();
+		int col = getColum();
+		if(maze.hasDotAt(row, col)) {
+			maze.removeDotAt(row,col);
+			world.increaseScore();
+		}
 	}
 	
 	private boolean canMoveInDirection(int dir) {
