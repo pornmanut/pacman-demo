@@ -20,20 +20,25 @@ public class GameScreen extends ScreenAdapter{
 		Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 	}
-	
-	private void update(float delta) {
+	private void updatePacmanDirection() {
+		Pacman pacman = world.getPacman();
 		if(Gdx.input.isKeyPressed(Keys.UP)) {
-			world.getPacman().movement(Pacman.DIR_UP);
+			pacman.setNextDirection(Pacman.DIR_UP);
 		}
 		if(Gdx.input.isKeyPressed(Keys.LEFT)) {
-			world.getPacman().movement(Pacman.DIR_LEFT);
+			pacman.setNextDirection(Pacman.DIR_LEFT);
 		}
 		if(Gdx.input.isKeyPressed(Keys.DOWN)) {
-			world.getPacman().movement(Pacman.DIR_DOWN);
+			pacman.setNextDirection(Pacman.DIR_DOWN);
 		}
 		if(Gdx.input.isKeyPressed(Keys.RIGHT)) {
-			world.getPacman().movement(Pacman.DIR_RIGHT);
+			pacman.setNextDirection(Pacman.DIR_RIGHT);
 		}
+	}
+	
+	private void update(float delta) {
+		updatePacmanDirection();
+		world.update(delta);
 	}
 	
 	@Override
