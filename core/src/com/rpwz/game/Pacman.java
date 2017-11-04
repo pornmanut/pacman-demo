@@ -41,6 +41,15 @@ public class Pacman {
 		return ((int)position.x)/WorldRenderer.BLOCK_SIZE;
 	}
 	
+	private void movement(int dir) {
+		position.x += MOVE_SPEED * DIR_OFFSETS[dir][0];
+		position.y += MOVE_SPEED * DIR_OFFSETS[dir][1];
+	}
+	
+	private void eatDot() {
+		maze.removeDotAt(getRow(), getColum());
+	}
+	
 	private boolean canMoveInDirection(int dir) {
 		int nextColum = getColum()+DIR_OFFSETS[dir][0];
 		int nextRow = getRow()+DIR_OFFSETS[dir][1];
@@ -64,12 +73,10 @@ public class Pacman {
 		return ((((int)position.x - blockSize/2) % blockSize) == 0) &&
                 ((((int)position.y - blockSize/2) % blockSize) == 0);
 	}
-	public void movement(int dir) {
-		position.x += MOVE_SPEED * DIR_OFFSETS[dir][0];
-		position.y += MOVE_SPEED * DIR_OFFSETS[dir][1];
-	}
+	
 	public void update(float delta) {
 		if(isAtCenter()) {
+			this.eatDot();
 			if(this.canMoveInDirection(nextDir)) {
 				this.currentDir = this.nextDir;
 			}else {
