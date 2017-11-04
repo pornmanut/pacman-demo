@@ -25,18 +25,40 @@ public class Pacman {
 	private int nextDir;
 	
 	private Vector2 position;
+	private Maze maze;
 	
-	public Pacman(int x,int y) {
-		position = new Vector2(x,y);
+	public Pacman(int x,int y,Maze maze) {
+		this.position = new Vector2(x,y);
 		this.currentDir = DIR_STILL;
 		this.nextDir = DIR_STILL;
+		this.maze = maze;
 	}
+	
+	private int getRow() {
+		return ((int)position.y)/WorldRenderer.BLOCK_SIZE;
+	}
+	private int getColum() {
+		return ((int)position.x)/WorldRenderer.BLOCK_SIZE;
+	}
+	
+	private boolean canMoveInDirection(int dir) {
+		int nextColum = getColum()+DIR_OFFSETS[dir][0];
+		int nextRow = getRow()+DIR_OFFSETS[dir][1];
+		
+		if(maze.hasWallAt(nextRow, nextColum)) {
+			return false;
+		}else{
+			return true;
+		}
+	}
+	
 	public void setNextDirection(int dir) {
 		this.nextDir = dir;
 	}
 	public Vector2 getPosition() {
 		return position;
 	}
+	
 	public boolean isAtCenter() {
 		int blockSize = WorldRenderer.BLOCK_SIZE;
 		return ((((int)position.x - blockSize/2) % blockSize) == 0) &&
@@ -48,7 +70,12 @@ public class Pacman {
 	}
 	public void update(float delta) {
 		if(isAtCenter()) {
-			this.currentDir = this.nextDir;
+			if(this.canMoveInDirection(nextDir)) {
+				this.currentDir = this.nextDir;
+			}else {
+				this.currentDir = DIR_STILL;
+			}
+			
 		}
 		movement(this.currentDir);
 	}

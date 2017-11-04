@@ -5,8 +5,8 @@ public class World {
 	private Maze maze;
 	
 	public World(PacmanGame pacmanGame){
-		this.pacman = new Pacman(60,60);
 		this.maze = new Maze();
+		this.pacman = new Pacman(60,60,this.maze);
 	}
 	public void update(float delta) {
 		pacman.update(delta);

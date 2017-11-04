@@ -25,14 +25,17 @@ public class GameScreen extends ScreenAdapter{
 		if(Gdx.input.isKeyPressed(Keys.UP)) {
 			pacman.setNextDirection(Pacman.DIR_UP);
 		}
-		if(Gdx.input.isKeyPressed(Keys.LEFT)) {
+		else if(Gdx.input.isKeyPressed(Keys.LEFT)) {
 			pacman.setNextDirection(Pacman.DIR_LEFT);
 		}
-		if(Gdx.input.isKeyPressed(Keys.DOWN)) {
+		else if(Gdx.input.isKeyPressed(Keys.DOWN)) {
 			pacman.setNextDirection(Pacman.DIR_DOWN);
 		}
-		if(Gdx.input.isKeyPressed(Keys.RIGHT)) {
+		else if(Gdx.input.isKeyPressed(Keys.RIGHT)) {
 			pacman.setNextDirection(Pacman.DIR_RIGHT);
+		}else 
+		{
+			pacman.setNextDirection(Pacman.DIR_STILL);
 		}
 	}
 	
