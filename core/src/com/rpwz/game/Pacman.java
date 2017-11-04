@@ -1,5 +1,8 @@
 package com.rpwz.game;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import com.badlogic.gdx.math.Vector2;
 
 public class Pacman {
@@ -27,15 +30,35 @@ public class Pacman {
 	private Vector2 position;
 	private Maze maze;
 	private World world;
+	private List<DotEattenListener> listeners;
+	
+	
+	public interface DotEattenListener{
+		void notifyDotEatten();
+	}
+	
+	private void notifyDotEattenListeners() {
+		for(DotEattenListener l:listeners) {
+			l.notifyDotEatten();
+		}
+	}
+	
+	public void registerDotEattenLister(DotEattenListener l) {
+		listeners.add(l);
+	}
 	
 	public Pacman(int x,int y,World world) {
 		this.position = new Vector2(x,y);
+		
 		this.currentDir = DIR_STILL;
 		this.nextDir = DIR_STILL;
+		
 		this.world = world;
 		this.maze = this.world.getMaze();
+		
+		listeners = new LinkedList<DotEattenListener>();
 	}
-	
+
 	private int getRow() {
 		return ((int)position.y)/WorldRenderer.BLOCK_SIZE;
 	}
@@ -53,7 +76,7 @@ public class Pacman {
 		int col = getColum();
 		if(maze.hasDotAt(row, col)) {
 			maze.removeDotAt(row,col);
-			world.increaseScore();
+			notifyDotEattenListeners();
 		}
 	}
 	
